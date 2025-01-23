@@ -271,11 +271,11 @@ class SquareShape extends Shape {
   }
 }
 
-class SpritesheetShape extends Shape {
+class SpritesheetShape extends CircleShape {
   /// It has 4 edges and looks like a rectangle but all edges have same size
-  SpritesheetShape(this.spriteIndex, {this.spriteWidth = 285});
+  SpritesheetShape({this.spriteIndex = 1, this.spriteWidth = 285});
 
-  int spriteIndex = 0;
+  int spriteIndex;
   final double spriteWidth;
 
   @override
@@ -284,10 +284,10 @@ class SpritesheetShape extends Shape {
     ui.Image defaultShapes,
   ) {
     final rect = Rect.fromLTWH(
-      spriteIndex * spriteWidth,
+      particle.randomIndex % spriteIndex * spriteWidth,
       0,
-      Shape.defaultSpriteSize.width,
-      Shape.defaultSpriteSize.height,
+      spriteWidth,
+      spriteWidth,
     );
     final transform = RSTransform.fromComponents(
       rotation: 0,
@@ -306,7 +306,7 @@ class SpritesheetShape extends Shape {
       rect: rect,
       transform: transform,
       color: color,
-      blendMode: null
+      blendMode: BlendMode.srcIn
     );
   }
 }

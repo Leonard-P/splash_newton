@@ -115,6 +115,7 @@ class NewtonState extends State<Newton> with SingleTickerProviderStateMixin {
       child: FutureBuilder(
         future: _shapeSpriteSheet,
         builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
+          print(snapshot);
           if (snapshot.hasData) {
             return RepaintBoundary(
               child: LayoutBuilder(

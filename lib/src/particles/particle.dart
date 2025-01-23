@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -27,13 +28,16 @@ class Particle {
         initialSize = configuration.size,
         initialColor = configuration.color,
         postEffectBuilder = configuration.postEffectBuilder {
-    shape = configuration.shapeBuilder?.call(initialPosition) ?? configuration.shape!;
+    shape = configuration.shapeBuilder?.call(initialPosition) ??
+        configuration.shape!;
     _color = configuration.color.computeColor(0);
     _zIndex = configuration.zIndexBuilder?.call(initialPosition) ?? 0;
+    randomIndex = Random().nextInt(1 << 32);
   }
 
   /// The initial position of the particle when it was created.
   final Offset initialPosition;
+  late int randomIndex;
 
   /// The initial size of the particle as defined in its configuration.
   final Size initialSize;
@@ -71,8 +75,13 @@ class Particle {
   /// Computes the transformation for rendering the image using the particle state.
   ///
   /// Returns the computed transformation for rendering the image with the current particle state.
-  ({ui.Image image, ui.Rect rect, ui.RSTransform transform, ui.Color color, ui.BlendMode? blendMode})?
-      computeTransformation(
+  ({
+    ui.Image image,
+    ui.Rect rect,
+    ui.RSTransform transform,
+    ui.Color color,
+    ui.BlendMode? blendMode
+  })? computeTransformation(
     ui.Image defaultShapes,
   ) {
     return shape.computeTransformation(this, defaultShapes);
