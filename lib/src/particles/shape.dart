@@ -270,3 +270,43 @@ class SquareShape extends Shape {
     );
   }
 }
+
+class SpritesheetShape extends Shape {
+  /// It has 4 edges and looks like a rectangle but all edges have same size
+  SpritesheetShape(this.spriteIndex, {this.spriteWidth = 285});
+
+  int spriteIndex = 0;
+  final double spriteWidth;
+
+  @override
+  TransformationData? computeTransformation(
+    Particle particle,
+    ui.Image defaultShapes,
+  ) {
+    final rect = Rect.fromLTWH(
+      spriteIndex * spriteWidth,
+      0,
+      Shape.defaultSpriteSize.width,
+      Shape.defaultSpriteSize.height,
+    );
+    final transform = RSTransform.fromComponents(
+      rotation: 0,
+      scale: min(
+        particle.size.width / Shape.defaultSpriteSize.width,
+        particle.size.height / Shape.defaultSpriteSize.height,
+      ),
+      anchorX: Shape.defaultSpriteSize.width / 2,
+      anchorY: Shape.defaultSpriteSize.height / 2,
+      translateX: particle.position.dx,
+      translateY: particle.position.dy,
+    );
+    final color = particle.color;
+    return (
+      image: defaultShapes,
+      rect: rect,
+      transform: transform,
+      color: color,
+      blendMode: null
+    );
+  }
+}
