@@ -77,7 +77,51 @@ class CircleShape extends Shape {
       translateY: particle.position.dy,
     );
     final color = particle.color;
-    return (image: defaultShapes, rect: rect, transform: transform, color: color, blendMode: null);
+    return (
+      image: defaultShapes,
+      rect: rect,
+      transform: transform,
+      color: color,
+      blendMode: null
+    );
+  }
+}
+
+class RectangleShape extends CircleShape {
+  /// Well it’s a circle
+  const RectangleShape();
+
+  @override
+  TransformationData? computeTransformation(
+    Particle particle,
+    ui.Image defaultShapes,
+  ) {
+    final rect = Rect.fromLTWH(
+      Shape.defaultSpriteSize.width,
+      0,
+      Shape.defaultSpriteSize.width,
+      Shape.defaultSpriteSize.height,
+    );
+    final transform = RSTransform.fromComponents(
+      rotation: 0,
+      scale: min(
+        particle.size.width / Shape.defaultSpriteSize.width,
+        particle.size.height / Shape.defaultSpriteSize.height,
+      ),
+      anchorX: Shape.defaultSpriteSize.width / 2,
+      anchorY: Shape.defaultSpriteSize.height / 2,
+      translateX: particle.position.dx,
+      translateY: particle.position.dy,
+    );
+    // final color = particle.color;
+    final color = Colors.red;
+    return (
+      image: defaultShapes,
+      rect: rect,
+      transform: transform,
+      color: color,
+      blendMode: null
+    );
   }
 }
 
@@ -118,7 +162,13 @@ class ImageShape extends Shape {
       translateY: particle.position.dy,
     );
     final color = particle.color;
-    return (image: image, rect: rect, transform: transform, color: color, blendMode: blendMode);
+    return (
+      image: image,
+      rect: rect,
+      transform: transform,
+      color: color,
+      blendMode: blendMode
+    );
   }
 }
 
@@ -137,7 +187,8 @@ class ImageAssetShape extends Shape {
     this.blendMode = ui.BlendMode.modulate,
     bool deferLoading = false,
     ui.Image? placeholderImage,
-  }) : _imageShape = placeholderImage != null ? ImageShape(placeholderImage) : null {
+  }) : _imageShape =
+            placeholderImage != null ? ImageShape(placeholderImage) : null {
     if (!deferLoading) {
       load();
     }
@@ -210,6 +261,12 @@ class SquareShape extends Shape {
       translateY: particle.position.dy,
     );
     final color = particle.color;
-    return (image: defaultShapes, rect: rect, transform: transform, color: color, blendMode: null);
+    return (
+      image: defaultShapes,
+      rect: rect,
+      transform: transform,
+      color: color,
+      blendMode: null
+    );
   }
 }
